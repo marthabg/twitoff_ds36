@@ -4,12 +4,12 @@ from .twitter import add_or_update_user
 from .predict import predict_user
 from os import getenv
 
-#FACTORY
+# FACTORY
 def create_app():
     app = Flask(__name__)
 
-    #Tell our app where to find our database
-    #registering our database with the app
+    # Tell our app where to find our database
+    # registering our database with the app
     app.config['SQLALCHEMY_DATABASE_URI'] = getenv('DATABASE_URI')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -17,15 +17,15 @@ def create_app():
 
     @app.route("/")
     def home():
-        #query the database for all users
+        # query the database for all users
         users = User.query.all()
         return render_template('base.html', title='Home', users=users)
 
     @app.route("/reset")
     def reset():
-        #Drop our DB tables
+        # Drop our DB tables
         DB.drop_all()
-        #Create tables according to the classes in models.py
+        # Create tables according to the classes in models.py
         DB.create_all()
         return render_template('base.html', title='Reset DB')
 
@@ -42,7 +42,7 @@ def create_app():
     def user(username=None, message=''):
         if request.method == 'GET':
             tweets = User.query.filter(User.username==username).one().tweets
-        
+  
         if request.method == 'POST':
             tweets = []
             try:
